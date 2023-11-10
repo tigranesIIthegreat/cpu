@@ -119,4 +119,4 @@ class ALULogFileVerifier(LogFileVerifier):
             assertionMessage = f'{operationString} must be {real}, but out is {out}'
             assert assertionStatement, assertionMessage
 
-ALULogFileVerifier('log/core/alu.log').verify()
+ALULogFileVerifier('log/alu.log').verify()

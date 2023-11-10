@@ -1,4 +1,4 @@
-`include "rtl/core/alu.v"
+`include "rtl/alu.v"
 
 module alu_tb;
     parameter DATA_WIDTH = 8;

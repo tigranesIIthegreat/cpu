@@ -15,7 +15,7 @@ project_abs_path = os.path.dirname(os.path.abspath(__file__))
 
 def corresponding_path(path, root):
     path_from_project = os.path.relpath(path, project_abs_path)
-    relpath = path_from_project.split('/', 1)[1]
+    relpath = path_from_project.split('/', 1)[1] if len(path_from_project) == 1 else path_from_project
     return os.path.join(root, relpath)
 
 def change_extension(file_path, new_extension):
