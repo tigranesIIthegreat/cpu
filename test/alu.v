@@ -1,14 +1,14 @@
 `include "rtl/alu.v"
 
 module alu_tb;
-    parameter DATA_WIDTH = 8;
-    parameter SEL_WIDTH = 4;
+    parameter WORD_WIDTH = 8;
+    parameter OPCODE_WIDTH = 4;
 
-    reg [DATA_WIDTH - 1 : 0] operand1;
-    reg [DATA_WIDTH - 1 : 0] operand2;
-    reg [SEL_WIDTH - 1 : 0] opCode;
+    reg [WORD_WIDTH - 1 : 0] operand1;
+    reg [WORD_WIDTH - 1 : 0] operand2;
+    reg [OPCODE_WIDTH - 1 : 0] opCode;
 
-    wire [DATA_WIDTH-1:0] result;
+    wire [WORD_WIDTH-1:0] result;
     wire carryOut;
 
     alu ALU_UUT (
@@ -22,19 +22,13 @@ module alu_tb;
     reg clk = 0;
     always #5 clk = ~clk;
 
-    reg reset = 0;
-    reg start = 0;
     reg done = 0;
 
     integer log_file;
     initial begin
-        log_file = $fopen("log/core/alu.log", "w");
+        log_file = $fopen("log/alu.log", "w");
         $fdisplay(log_file, 
             "operand1\t\t\tB\t\t\tSel\t\tOut\t\t\tCarryOut\n----------------------------------------------------");
-
-        #10 reset = 1;
-        #10 reset = 0;
-        #10 start = 1;
 
         @(posedge clk);
         while(!done) @(posedge clk);
@@ -48,18 +42,18 @@ module alu_tb;
         operand2 = 0;
         opCode = 0;
 
-        repeat (2**DATA_WIDTH * 2**DATA_WIDTH * 2**SEL_WIDTH) begin
+        repeat (2**WORD_WIDTH * 2**WORD_WIDTH * 2**OPCODE_WIDTH) begin
             @(posedge clk); // Wait for next clock cycle (if using synchronous design)
 
             // Log the inputs and outputs
             $fdisplay(log_file, "%b\t%b\t%b\t%b\t%b", operand1, operand2, opCode, result, carryOut);
 
             // Increment inputs for the next test
-            if (operand2 == (2**DATA_WIDTH - 1)) begin
+            if (operand2 == (2**WORD_WIDTH - 1)) begin
                 operand2 = 0;
-                if (operand1 == (2**DATA_WIDTH - 1)) begin
+                if (operand1 == (2**WORD_WIDTH - 1)) begin
                     operand1 = 0;
-                    if (opCode == (2**SEL_WIDTH - 1)) begin
+                    if (opCode == (2**OPCODE_WIDTH - 1)) begin
                         opCode = 0;
                     end
                     else begin
