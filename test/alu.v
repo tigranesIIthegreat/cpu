@@ -11,7 +11,7 @@ module alu_tb;
     wire [WORD_WIDTH-1:0] result;
     wire carryOut;
 
-    alu ALU_UUT (
+    alu ALU (
         .operand1(operand1),
         .operand2(operand2),
         .opCode(opCode),
@@ -28,7 +28,7 @@ module alu_tb;
     initial begin
         log_file = $fopen("log/alu.log", "w");
         $fdisplay(log_file, 
-            "operand1\t\t\tB\t\t\tSel\t\tOut\t\t\tCarryOut\n----------------------------------------------------");
+            "operand1\toperand2\topCode\tresult\t\tcarryOut\n----------------------------------------------------");
 
         @(posedge clk);
         while(!done) @(posedge clk);

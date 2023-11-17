@@ -12,11 +12,11 @@ class Extension(str):
     VVP = '.vvp'
     LOG = '.log'
 
-script_directory = os.path.dirname(os.path.abspath(__file__))
-project_root = os.path.dirname(script_directory)
+_script_directory = os.path.dirname(os.path.abspath(__file__))
+_project_root = os.path.dirname(_script_directory)
 
 def _corresponding_path(path, root):
-    path_from_project = os.path.relpath(path, project_root)
+    path_from_project = os.path.relpath(path, _project_root)
     relpath = path_from_project.split('/', 1)[1] if len(path_from_project) == 1 else path_from_project
     return os.path.join(root, relpath)
 
@@ -24,8 +24,8 @@ def _change_extension(file_path, new_extension):
     return os.path.splitext(file_path)[0] + new_extension
 
 def _generate_log_files():
-    test_root = os.path.join(project_root, Path.TEST)
-    log_root = os.path.join(project_root, Path.LOG)
+    test_root = os.path.join(_project_root, Path.TEST)
+    log_root = os.path.join(_project_root, Path.LOG)
     for root, _, files in os.walk(test_root):
         for file in files:
             if not file.endswith(Extension.TEST): 
@@ -39,23 +39,22 @@ def _generate_log_files():
                 open(log_file, 'w').close()
 
 def _run_command(command: list):
-    print()
-    print(f"{Fore.WHITE + Style.BRIGHT}COMMAND :{Style.RESET_ALL}", ' '.join(command))
+    print(f"{Fore.WHITE + Style.BRIGHT}COMMAND |{Style.RESET_ALL}", ' '.join(command))
     result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     if result.stdout:
-        print(f"{Fore.WHITE + Style.BRIGHT} STDOUT :{Style.RESET_ALL}", result.stdout, end='')
+        print(f"{Fore.WHITE + Style.BRIGHT} STDOUT |{Style.RESET_ALL}", result.stdout, end='')
     if result.stderr:
-        print(f"{Fore.WHITE + Style.BRIGHT} STDERR :{Style.RESET_ALL}", result.stderr, end='')
+        print(f"{Fore.WHITE + Style.BRIGHT} STDERR |{Style.RESET_ALL}", result.stderr, end='')
 
-    print(f"{Fore.WHITE + Style.BRIGHT} STATUS :", end='')
+    print(f"{Fore.WHITE + Style.BRIGHT} STATUS |", end='')
     print(f"{Fore.RED} FAIL" if result.returncode else f"{Fore.GREEN} SUCCESS")
     print(f"{Style.RESET_ALL}")
 
 
 def compile():
     _generate_log_files()
-    test_root = os.path.join(project_root, Path.TEST)
-    vvp_root = os.path.join(project_root, Path.VVP)
+    test_root = os.path.join(_project_root, Path.TEST)
+    vvp_root = os.path.join(_project_root, Path.VVP)
     for root, _, files in os.walk(test_root):
         for file in files:
             if not file.endswith(Extension.TEST): 
@@ -70,7 +69,7 @@ def compile():
             _run_command(['iverilog', '-o', vvp_file, os.path.join(test_root, file)])
 
 def run():
-    vvp_abs_path = os.path.join(project_root, Path.VVP)
+    vvp_abs_path = os.path.join(_project_root, Path.VVP)
     for root, _, files in os.walk(vvp_abs_path):
         for file in files:
             if not file.endswith('.vvp'):

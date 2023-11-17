@@ -17,106 +17,106 @@ class LogFileVerifier:
         raise NotImplementedError
 
     
-class ALULogFileVerifier(LogFileVerifier):
+class operand1LULogFileVerifier(LogFileVerifier):
     def verify(self):
         for test_case in self._test_cases:
-            A = int(test_case[0], 2)  # binary string to integer for A
-            B = int(test_case[1], 2)  # binary string to integer for B
-            Sel = int(test_case[2], 2)  # binary string to integer for Sel
-                # binary string to integer for Out
-            Out = int(test_case[3], 2) if not test_case[3].__contains__('x') else 'x'  
-            CarryOut = int(test_case[4], 2)  # binary string to integer for CarryOut
+            operand1 = int(test_case[0], 2)  # binary string to integer for operand1
+            operand2 = int(test_case[1], 2)  # binary string to integer for operand2
+            opCode = int(test_case[2], 2)  # binary string to integer for opCode
+                # binary string to integer for result
+            result = int(test_case[3], 2) if not test_case[3].__contains__('x') else 'x'  
+            Carryresult = int(test_case[4], 2)  # binary string to integer for Carryresult
 
-            out = (256 + Out if CarryOut else Out) if Out != 'x' else 'x'
+            out = (256 + result if Carryresult else result) if result != 'x' else 'x'
             operationString = 'op'
             real = 0
             assertionStatement = True
 
-            if Sel == 0: # addition
-                real = A + B
-                operationString = f'{A} + {B}'
+            if opCode == 0: # addition
+                real = operand1 + operand2
+                operationString = f'{operand1} + {operand2}'
                 assertionStatement = (real - out) % 256 == 0
 
-            elif Sel == 1: # subtraction
-                real = A - B
-                operationString = f'{A} - {B}'
+            elif opCode == 1: # subtraction
+                real = operand1 - operand2
+                operationString = f'{operand1} - {operand2}'
                 assertionStatement = (real - out) % 256 == 0
 
-            elif Sel == 2: # multiplication
-                real = A * B
-                operationString = f'{A} * {B}'
+            elif opCode == 2: # multiplication
+                real = operand1 * operand2
+                operationString = f'{operand1} * {operand2}'
                 assertionStatement = (real - out) % 256 == 0
 
-            elif Sel == 3: # division
-                if B == 0:
-                    assertionStatement = Out == 'x'
-                    assertionMessage = f'{A} / {B} must be \'x\', but Out is {out}'
+            elif opCode == 3: # division
+                if operand2 == 0:
+                    assertionStatement = result == 'x'
+                    assertionMessage = f'{operand1} / {operand2} must be \'x\', but result is {out}'
                 else:
-                    real = A // B
-                    operationString = f'{A} / {B}'
+                    real = operand1 // operand2
+                    operationString = f'{operand1} / {operand2}'
                     assertionStatement = (real - out) % 256 == 0
 
-            elif Sel == 4: # shift left by 1 (A)
-                real = A * 2 % 256
-                operationString = f'{A} << 1'
+            elif opCode == 4: # shift left by 1 (operand1)
+                real = operand1 * 2 % 256
+                operationString = f'{operand1} << 1'
                 assertionStatement = (real - out) % 256 == 0
 
-            elif Sel == 5: # shift right by 1 (A)
-                real = A // 2
-                operationString = f'{A} >> 1'
+            elif opCode == 5: # shift right by 1 (operand1)
+                real = operand1 // 2
+                operationString = f'{operand1} >> 1'
                 assertionStatement = (real - out) % 256 == 0
 
-            elif Sel == 6: # rotate left by 1 (A)
-                real = A * 2 % 256 + A // 128
-                operationString = f'{A} <<< 1'
+            elif opCode == 6: # rotate left by 1 (operand1)
+                real = operand1 * 2 % 256 + operand1 // 128
+                operationString = f'{operand1} <<< 1'
                 assertionStatement = (real - out) % 256 == 0
 
-            elif Sel == 7: # rotate right by 1 (A)
-                real = A // 2 + A % 2 * 128
-                operationString = f'{A} >>> 1'
+            elif opCode == 7: # rotate right by 1 (operand1)
+                real = operand1 // 2 + operand1 % 2 * 128
+                operationString = f'{operand1} >>> 1'
                 assertionStatement = (real - out) % 256 == 0
             
-            elif Sel == 8: # logical and
-                real = A & B
-                operationString = f'{A} & {B}'
+            elif opCode == 8: # logical and
+                real = operand1 & operand2
+                operationString = f'{operand1} & {operand2}'
                 assertionStatement = (real - out) % 256 == 0
 
-            elif Sel == 9: # logical or
-                real = A | B
-                operationString = f'{A} | {B}'
+            elif opCode == 9: # logical or
+                real = operand1 | operand2
+                operationString = f'{operand1} | {operand2}'
                 assertionStatement = (real - out) % 256 == 0
 
-            elif Sel == 10: # logical xor
-                real = A ^ B
-                operationString = f'{A} ^ {B}'
+            elif opCode == 10: # logical xor
+                real = operand1 ^ operand2
+                operationString = f'{operand1} ^ {operand2}'
                 assertionStatement = (real - out) % 256 == 0
 
-            elif Sel == 11: # logical nand
-                real = ~(A | B)
-                operationString = f'~({A} | {B})'
+            elif opCode == 11: # logical nand
+                real = ~(operand1 | operand2)
+                operationString = f'~({operand1} | {operand2})'
                 assertionStatement = (real - out) % 256 == 0
 
-            elif Sel == 12: # logical nor
-                real = ~(A & B)
-                operationString = f'~({A} & {B})'
+            elif opCode == 12: # logical nor
+                real = ~(operand1 & operand2)
+                operationString = f'~({operand1} & {operand2})'
                 assertionStatement = (real - out) % 256 == 0
 
-            elif Sel == 13: # logical xnor
-                real = ~(A ^ B)
-                operationString = f'~({A} ^ {B})'
+            elif opCode == 13: # logical xnor
+                real = ~(operand1 ^ operand2)
+                operationString = f'~({operand1} ^ {operand2})'
                 assertionStatement = (real - out) % 256 == 0
 
-            elif Sel == 14: # greater comparision
-                real = 1 if A > B else 0
-                operationString = f'{A} > {B}'
+            elif opCode == 14: # greater comparision
+                real = 1 if operand1 > operand2 else 0
+                operationString = f'{operand1} > {operand2}'
                 assertionStatement = (real - out) % 256 == 0
 
-            elif Sel == 15: # equal comparision
-                real = 1 if A == B else 0
-                operationString = f'{A} == {B}'
+            elif opCode == 15: # equal comparision
+                real = 1 if operand1 == operand2 else 0
+                operationString = f'{operand1} == {operand2}'
                 assertionStatement = (real - out) % 256 == 0
 
             assertionMessage = f'{operationString} must be {real}, but out is {out}'
             assert assertionStatement, assertionMessage
 
-ALULogFileVerifier('log/alu.log').verify()
+operand1LULogFileVerifier('log/alu.log').verify()

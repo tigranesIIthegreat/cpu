@@ -13,9 +13,10 @@ module memory #(parameter CELL_COUNT = 256)(
     read_data = registers[read_address];
   end
 
+  integer i;
   always @(posedge clock, posedge reset) begin
     if (reset) begin
-      for (int i = 0; i < CELL_COUNT; i = i + 1) begin
+      for (i = 0; i < CELL_COUNT; i = i + 1) begin
         registers[i] <= 8'h00;
       end
     end else begin
