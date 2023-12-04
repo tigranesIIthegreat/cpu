@@ -16,7 +16,7 @@ module alu(input [7:0] operand1,
             4'b0111: result = operand1 << 1;                        // Logical shift left
             4'b1000: result = operand1 >> 1;                        // Logical shift right
             4'b1001: zero_flag = (operand1 == operand2) ? 1 : 0;    // Equal comparison   
-            default: result = operand1 + operand2;
+            default: begin result = 8'b0; zero_flag = 0; end
         endcase
     end
 endmodule
