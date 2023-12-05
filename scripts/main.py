@@ -1,3 +1,5 @@
+from check.alu import ALU
+
 import os
 import subprocess
 from colorama import Fore, Style
@@ -39,14 +41,14 @@ def _generate_log_files():
                 open(log_file, 'w').close()
 
 def _run_command(command: list):
-    print(f"{Fore.WHITE + Style.BRIGHT}COMMAND |{Style.RESET_ALL}", ' '.join(command))
+    print(f"{Fore.YELLOW + Style.BRIGHT}COMMAND |{Style.RESET_ALL}", ' '.join(command))
     result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     if result.stdout:
-        print(f"{Fore.WHITE + Style.BRIGHT} STDOUT |{Style.RESET_ALL}", result.stdout, end='')
+        print(f"{Fore.YELLOW + Style.BRIGHT} STDOUT |{Style.RESET_ALL}", result.stdout, end='')
     if result.stderr:
-        print(f"{Fore.WHITE + Style.BRIGHT} STDERR |{Style.RESET_ALL}", result.stderr, end='')
+        print(f"{Fore.YELLOW + Style.BRIGHT} STDERR |{Style.RESET_ALL}", result.stderr, end='')
 
-    print(f"{Fore.WHITE + Style.BRIGHT} STATUS |", end='')
+    print(f"{Fore.YELLOW + Style.BRIGHT} STATUS |", end='')
     print(f"{Fore.RED} FAIL" if result.returncode else f"{Fore.GREEN} SUCCESS")
     print(f"{Style.RESET_ALL}")
 
@@ -80,3 +82,4 @@ def run():
 if __name__ == '__main__':     
     compile()
     run()
+    ALU('log/alu.log').verify()
