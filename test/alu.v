@@ -26,7 +26,7 @@ module alu_tb;
 
     initial begin
         log_file = $fopen("log/alu.log", "w");
-        $fdisplay(log_file, "operand1\toperand2\topCode\tresult\t\tzero_flag\n");
+        $fdisplay(log_file, "operand1\t\toperand2\t\topCode\t\tresult\t\t\tzero_flag\n");
 
         @(posedge clk);
         while(!done) @(posedge clk);
@@ -42,7 +42,7 @@ module alu_tb;
 
         repeat (2**WORD_WIDTH * 2**WORD_WIDTH * 2**OPCODE_WIDTH) begin
             @(posedge clk); // Wait for next clock cycle
-            $fdisplay(log_file, "%b\t%b\t%b\t%b\t%b", operand1, operand2, opCode, result, zero_flag);
+            $fdisplay(log_file, "%b\t\t%b\t\t%b\t\t%b\t\t%b", operand1, operand2, opCode, result, zero_flag);
 
             // Increment inputs for the next test
             if (operand2 == (2**WORD_WIDTH - 1)) begin

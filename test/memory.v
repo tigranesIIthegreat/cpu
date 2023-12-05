@@ -38,9 +38,9 @@ module memory_tb;
 
     initial begin
         i = 0;
-        reset = 0;
-        reset = 1;
-        reset = 0;
+        #1 reset = 0;
+        #1 reset = 1;
+        #1 reset = 0;
         write_enable = 1;
 
         repeat (1000) begin

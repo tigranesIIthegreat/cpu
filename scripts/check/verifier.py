@@ -19,7 +19,7 @@ class LogFileVerifier:
         with open(path, 'r') as file:
             lines = file.readlines()
             for line in lines[2:]:  # Skip the header lines
-                test_case = line.strip().split('\t')
+                test_case = line.strip().split('\t\t')
                 test_cases.append(test_case)
         self._test_cases = test_cases
 

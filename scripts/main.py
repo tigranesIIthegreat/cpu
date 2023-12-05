@@ -1,4 +1,5 @@
 from check.alu import ALU
+from check.memory import Memory
 
 import os
 import subprocess
@@ -83,3 +84,4 @@ if __name__ == '__main__':
     compile()
     run()
     ALU('log/alu.log').verify()
+    Memory('log/memory.log').verify()
