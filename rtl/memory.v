@@ -3,7 +3,6 @@ module memory #(parameter CELL_COUNT = 256)(
   input [7:0] write_address,
   input [7:0] write_data,
   input write_enable,
-  input clock,
   input reset,
   output reg [7:0] read_data);
 
@@ -14,7 +13,7 @@ module memory #(parameter CELL_COUNT = 256)(
   end
 
   integer i;
-  always @(posedge clock, posedge reset) begin
+  always @(*) begin
     if (reset) begin
       for (i = 0; i < CELL_COUNT; i = i + 1) begin
         registers[i] <= 8'h00;
