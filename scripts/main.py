@@ -1,5 +1,6 @@
 from check.alu import ALU
 from check.memory import Memory
+from check.program_counter import ProgramCounter
 
 import os
 import subprocess
@@ -85,3 +86,4 @@ if __name__ == '__main__':
     run()
     ALU('log/alu.log').verify()
     Memory('log/memory.log').verify()
+    ProgramCounter('log/program_counter.log').verify()

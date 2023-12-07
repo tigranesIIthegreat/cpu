@@ -50,9 +50,9 @@ module program_counter_tb;
         
         repeat (1000) begin
             #5 clock = 0;
-            enable = (i % 10 == 0) ? 0 : 1;
-            jump = (i % 31 == 0) ? 1 : 0;
-            jz = (i % 37 == 0) ? 1 : 0;
+            enable = ((i + 1) % 10 == 0) ? 0 : 1;
+            jump = ((i + 1) % 31 == 0) ? 1 : 0;
+            jz = ((i + 1) % 37 == 0) ? 1 : 0;
             zero_flag = (i % 74 == 0) ? 1 : 0;
             jump_address = i % 128;
             #5 clock = 1;
