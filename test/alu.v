@@ -19,8 +19,8 @@ module alu_tb;
         .zero_flag(zero_flag)
     );
 
-    reg clk = 0;
-    always #5 clk = ~clk;
+    reg clock = 0;
+    always #5 clock = ~clock;
     reg done = 0;
     integer log_file;
 
@@ -28,8 +28,8 @@ module alu_tb;
         log_file = $fopen("log/alu.log", "w");
         $fdisplay(log_file, "operand1\t\toperand2\t\topCode\t\tresult\t\t\tzero_flag\n");
 
-        @(posedge clk);
-        while(!done) @(posedge clk);
+        @(posedge clock);
+        while(!done) @(posedge clock);
 
         $fclose(log_file);
         $finish;
@@ -41,7 +41,7 @@ module alu_tb;
         opCode = 0;
 
         repeat (2**WORD_WIDTH * 2**WORD_WIDTH * 2**OPCODE_WIDTH) begin
-            @(posedge clk); // Wait for next clock cycle
+            @(posedge clock); // Wait for next clock cycle
             $fdisplay(log_file, "%b\t\t%b\t\t%b\t\t%b\t\t%b", operand1, operand2, opCode, result, zero_flag);
 
             // Increment inputs for the next test

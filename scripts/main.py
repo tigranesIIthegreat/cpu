@@ -1,6 +1,7 @@
 from check.alu import ALU
 from check.memory import Memory
 from check.program_counter import ProgramCounter
+from check.instruction_decoder import InstructionDecoder
 
 import os
 import subprocess
@@ -81,9 +82,13 @@ def run():
             vvp_file_path = os.path.join(root, file)
             _run_command(['vvp', vvp_file_path])
 
-if __name__ == '__main__':     
-    compile()
-    run()
+def check():
     ALU('log/alu.log').verify()
     Memory('log/memory.log').verify()
     ProgramCounter('log/program_counter.log').verify()
+    InstructionDecoder('log/instruction_decoder.log').verify()
+
+if __name__ == '__main__':     
+    compile()
+    run()
+    check()
