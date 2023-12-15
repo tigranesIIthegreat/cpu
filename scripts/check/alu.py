@@ -3,16 +3,16 @@ from .verifier import LogFileVerifier, report
 class ALU(LogFileVerifier):
     @report
     def verify(self):
-        for test_number, test_case in self.test_cases:
-            operand1 = int(test_case[0], 2)  # binary string to integer for operand1
-            operand2 = int(test_case[1], 2)  # binary string to integer for operand2
-            op_code = int(test_case[2], 2)  # binary string to integer for op_code
+        for test_line, port_values in self.port_valuess:
+            operand1 = int(port_values[0], 2)  # binary string to integer for operand1
+            operand2 = int(port_values[1], 2)  # binary string to integer for operand2
+            op_code = int(port_values[2], 2)  # binary string to integer for op_code
 
             # binary string to integer for result
-            result = int(test_case[3], 2) if not test_case[3].__contains__('x') else 'x'
+            result = int(port_values[3], 2) if not port_values[3].__contains__('x') else 'x'
 
             # binary string to integer for zero_flag
-            zero_flag = int(test_case[4], 2) if test_case[4] != 'x' else 'x'
+            zero_flag = int(port_values[4], 2) if port_values[4] != 'x' else 'x'
 
             if op_code == 0: # addition
                 real = operand1 + operand2
@@ -66,7 +66,7 @@ class ALU(LogFileVerifier):
 
             errorMessage = f'''
                 {operationString} must be {real}, but result is {result}
-                in the test case number {test_number}
+                in the test case number {test_line}
             '''
             if not success: return False, errorMessage
         return True, ''
