@@ -15,17 +15,17 @@ def report(func):
 class LogFileVerifier:
     def __init__(self, path: str):
         assert path.endswith('.log'), f'{path} is not a log file'
-        test_cases = []
-        with open(path, 'r') as file:
-            lines = file.readlines()
-            for line in lines[2:]:  # Skip the header lines
-                test_case = line.strip().split('\t\t')
-                test_cases.append(test_case)
-        self._test_cases = test_cases
+        self._path = path
 
     @property
     def test_cases(self) -> list[str]:
-        return self._test_cases
+        with open(self._path, 'r') as file:
+            lines = file.readlines()
+            test_number = -1
+            for line in lines[2:]:  # Skip the header lines
+                test_case = line.strip().split('\t\t')
+                test_number += 1
+                yield test_number, test_case
     
     def verify(self):
         raise NotImplementedError

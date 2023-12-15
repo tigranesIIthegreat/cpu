@@ -3,7 +3,7 @@ from .verifier import LogFileVerifier, report
 class ALU(LogFileVerifier):
     @report
     def verify(self):
-        for test_case in self._test_cases:
+        for test_number, test_case in self.test_cases:
             operand1 = int(test_case[0], 2)  # binary string to integer for operand1
             operand2 = int(test_case[1], 2)  # binary string to integer for operand2
             op_code = int(test_case[2], 2)  # binary string to integer for op_code
@@ -64,6 +64,9 @@ class ALU(LogFileVerifier):
                 operationString = f'cmp {operand1} {operand2}'
                 success = real == zero_flag
 
-            errorMessage = f'{operationString} must be {real}, but result is {result}'
+            errorMessage = f'''
+                {operationString} must be {real}, but result is {result}
+                in the test case number {test_number}
+            '''
             if not success: return False, errorMessage
         return True, ''
