@@ -3,7 +3,7 @@ from .verifier import LogFileVerifier, report
 class InstructionDecoder(LogFileVerifier):
     @report
     def verify(self):
-        for test_line, port_values in self.port_valuess:
+        for test_line, port_values in self.ports:
             instruction = bin(int(port_values[0], 2))[2:].zfill(16)
 
             actual_op_code = int(port_values[1], 2)

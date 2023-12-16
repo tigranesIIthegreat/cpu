@@ -3,7 +3,7 @@ from .verifier import LogFileVerifier, report
 class ALU(LogFileVerifier):
     @report
     def verify(self):
-        for test_line, port_values in self.port_valuess:
+        for test_line, port_values in self.ports:
             operand1 = int(port_values[0], 2)  # binary string to integer for operand1
             operand2 = int(port_values[1], 2)  # binary string to integer for operand2
             op_code = int(port_values[2], 2)  # binary string to integer for op_code

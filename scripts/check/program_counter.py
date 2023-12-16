@@ -5,7 +5,7 @@ class ProgramCounter(LogFileVerifier):
     def verify(self):
         expected_result = 0
 
-        for test_line, port_values in self.port_valuess:
+        for test_line, port_values in self.ports:
             enable = int(port_values[0], 2)
             jump = int(port_values[1], 2)
             jz = int(port_values[2], 2)

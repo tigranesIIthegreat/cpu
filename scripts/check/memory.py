@@ -6,7 +6,7 @@ class Memory(LogFileVerifier):
         expected_memory = [0, 0, 0, 0]
         actual_memory = [0, 0, 0, 0]
         
-        for test_line, port_values in self.port_valuess:
+        for test_line, port_values in self.ports:
             write_address = int(port_values[0], 2)
             write_data = int(port_values[1], 2)
             expected_memory[write_address] = write_data

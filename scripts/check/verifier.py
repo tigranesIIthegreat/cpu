@@ -18,7 +18,7 @@ class LogFileVerifier:
         self._path = path
 
     @property
-    def port_valuess(self) -> list[str]:
+    def ports(self) -> list[str]:
         with open(self._path, 'r') as file:
             port_names = file.readline()
             test_line = 1
