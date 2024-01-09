@@ -16,10 +16,10 @@ class ProgramCounter(LogFileVerifier):
             if enable:
                 if jump or jz and zero_flag:
                     expected_result = jump_address
-                elif expected_result == 126:
+                elif expected_result == 127:
                     expected_result = 0
                 else:
-                    expected_result += 2
+                    expected_result += 1
 
             if expected_result != actual_result:
                 message = f'''

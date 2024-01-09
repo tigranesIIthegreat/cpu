@@ -17,7 +17,7 @@ module program_counter (
         if (jump || (jz && zero_flag)) begin
           result <= jump_address;
         end else begin
-          next_address = result == 126 ? 0 : result + 2;
+          next_address = result == 127 ? 0 : result + 1;
           result <= next_address;
         end
       end
