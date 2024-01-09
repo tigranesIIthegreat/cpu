@@ -2,15 +2,16 @@
 
 module memory_tb;
     parameter CELL_COUNT = 4;
+    parameter LINE_WIDTH = 8;
 
-    reg [7:0] read_address;
-    reg [7:0] write_address; 
-    reg [7:0] write_data;
+    reg [LINE_WIDTH - 1:0] read_address;
+    reg [LINE_WIDTH - 1:0] write_address; 
+    reg [LINE_WIDTH - 1:0] write_data;
     reg write_enable;
     reg reset;
-    wire [7:0] read_data;
+    wire [LINE_WIDTH - 1:0] read_data;
 
-    memory #(CELL_COUNT) MEMORY (
+    memory #(CELL_COUNT, LINE_WIDTH) MEMORY (
         .read_address(read_address),
         .write_address(write_address),
         .write_data(write_data),

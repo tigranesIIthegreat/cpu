@@ -1,12 +1,12 @@
-module memory #(parameter CELL_COUNT = 256)(
-  input [7:0] read_address,
-  input [7:0] write_address,
-  input [7:0] write_data,
+module memory #(parameter CELL_COUNT = 256, parameter LINE_WIDTH = 4)(
+  input [LINE_WIDTH - 1:0] read_address,
+  input [LINE_WIDTH - 1:0] write_address,
+  input [LINE_WIDTH - 1:0] write_data,
   input write_enable,
   input reset,
-  output reg [7:0] read_data);
+  output reg [LINE_WIDTH - 1:0] read_data);
 
-  reg [7:0] registers [0:CELL_COUNT - 1];
+  reg [LINE_WIDTH - 1:0] registers [0:CELL_COUNT - 1];
 
   always @(*) begin
     read_data = registers[read_address];
