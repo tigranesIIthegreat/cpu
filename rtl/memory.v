@@ -1,6 +1,6 @@
 module memory #(parameter CELL_COUNT = 256, parameter LINE_WIDTH = 4)(
-  input [LINE_WIDTH - 1:0] read_address,
-  input [LINE_WIDTH - 1:0] write_address,
+  input [7:0] read_address,
+  input [7:0] write_address,
   input [LINE_WIDTH - 1:0] write_data,
   input write_enable,
   input reset,

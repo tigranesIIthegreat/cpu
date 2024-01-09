@@ -2,6 +2,7 @@ from check.alu import ALU
 from check.memory import Memory
 from check.program_counter import ProgramCounter
 from check.instruction_decoder import InstructionDecoder
+from check.instruction_register import InstructionRegister
 
 import os
 import subprocess
@@ -87,6 +88,7 @@ def check():
     Memory('log/memory.log').verify()
     ProgramCounter('log/program_counter.log').verify()
     InstructionDecoder('log/instruction_decoder.log').verify()
+    InstructionRegister('log/instruction_register.log').verify()
 
 if __name__ == '__main__':     
     compile()
