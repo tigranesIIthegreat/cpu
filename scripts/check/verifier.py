@@ -18,15 +18,14 @@ class LogFileVerifier:
         self._path = path
 
     @property
-    def ports(self) -> list[str]:
+    def test_cases(self) -> list[str]:
         with open(self._path, 'r') as file:
-            port_names = file.readline()
-            test_line = 1
-            for line in file.readlines():  # Skip the header lines
-                if test_line < 2: continue
-                port_values = line.strip().split('\t\t')
-                test_line += 1
-                yield test_line, dict(zip(port_names, port_values))
+            lines = file.readlines()
+            test_number = -1
+            for line in lines[2:]:  # Skip the header lines
+                test_case = line.strip().split('\t\t')
+                test_number += 1
+                yield test_number, test_case
     
     def verify(self):
         raise NotImplementedError
