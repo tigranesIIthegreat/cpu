@@ -1,8 +1,9 @@
 from check.alu import ALU
-from check.memory import Memory
-from check.program_counter import ProgramCounter
 from check.instruction_decoder import InstructionDecoder
 from check.instruction_register import InstructionRegister
+from check.memory import Memory
+from check.program_counter import ProgramCounter
+from check.register_file import RegisterFile
 
 import os
 import subprocess
@@ -54,7 +55,8 @@ def _run_command(command: list):
 
     print(f"{Fore.YELLOW + Style.BRIGHT} STATUS |", end='')
     print(f"{Fore.RED} FAIL" if result.returncode else f"{Fore.GREEN} SUCCESS")
-    print(f"{Fore.YELLOW + Style.BRIGHT}        |{Style.RESET_ALL}")
+    console_width = os.get_terminal_size().columns
+    print(f"{Fore.YELLOW + Style.NORMAL}{'-' * 8}{Style.BRIGHT}|{Style.NORMAL}{'-' * (console_width - 9)}{Style.RESET_ALL}")
 
 
 def compile():
@@ -85,10 +87,11 @@ def run():
 
 def check():
     ALU('log/alu.log').verify()
-    Memory('log/memory.log').verify()
-    ProgramCounter('log/program_counter.log').verify()
     InstructionDecoder('log/instruction_decoder.log').verify()
     InstructionRegister('log/instruction_register.log').verify()
+    Memory('log/memory.log').verify()
+    ProgramCounter('log/program_counter.log').verify()
+    RegisterFile('log/register_file.log').verify()
 
 if __name__ == '__main__':     
     compile()
