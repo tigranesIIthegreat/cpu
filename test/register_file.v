@@ -1,17 +1,14 @@
-`include "rtl/memory.v"
+`include "rtl/register_file.v"
 
-module memory_tb;
-    parameter CELL_COUNT = 4;
-    parameter LINE_WIDTH = 8;
-
-    reg [LINE_WIDTH - 1:0] read_address;
-    reg [LINE_WIDTH - 1:0] write_address; 
-    reg [LINE_WIDTH - 1:0] write_data;
+module register_file_tb;
+    reg [1:0] read_address;
+    reg [1:0] write_address;
+    reg [7:0] write_data;
     reg write_enable;
     reg reset;
-    wire [LINE_WIDTH - 1:0] read_data;
+    wire [7:0] read_data;
 
-    memory #(CELL_COUNT, LINE_WIDTH) MEMORY (
+    register_file GPR (
         .read_address(read_address),
         .write_address(write_address),
         .write_data(write_data),
@@ -28,7 +25,7 @@ module memory_tb;
     integer j;
 
     initial begin
-        log_file = $fopen("log/memory.log", "w");
+        log_file = $fopen("log/register_file.log", "w");
         $fdisplay(log_file, "write_address\twrite_data\t\t00\t\t\t\t01\t\t\t\t02\t\t\t\t03\n");
 
         @(posedge clock);
@@ -48,18 +45,18 @@ module memory_tb;
 
         repeat (1000) begin
             @(posedge clock);
-            write_address = i % CELL_COUNT;
+            write_address = i % 4;
             write_data = i % 256;
             $fwrite(log_file, "%b\t\t", write_address);
             $fwrite(log_file, "%b\t\t", write_data);
 
             j = 0;
-            repeat (CELL_COUNT) begin
+            repeat (4) begin
                 read_address = j;
                 #1 $fwrite(log_file, "%b\t\t", read_data);
                 j = j + 1;
             end
-            
+
             $fdisplay(log_file);
             i = i + 1;
         end

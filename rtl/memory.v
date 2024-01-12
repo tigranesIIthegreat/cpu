@@ -1,4 +1,4 @@
-module memory #(parameter CELL_COUNT = 256, parameter LINE_WIDTH = 4)(
+module memory #(parameter CELL_COUNT = 256, parameter LINE_WIDTH = 8)(
   input [7:0] read_address,
   input [7:0] write_address,
   input [LINE_WIDTH - 1:0] write_data,
