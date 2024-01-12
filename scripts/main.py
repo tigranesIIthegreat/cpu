@@ -54,7 +54,7 @@ def _run_command(command: list):
 
     print(f"{Fore.YELLOW + Style.BRIGHT} STATUS |", end='')
     print(f"{Fore.RED} FAIL" if result.returncode else f"{Fore.GREEN} SUCCESS")
-    print(f"{Style.RESET_ALL}")
+    print(f"{Fore.YELLOW + Style.BRIGHT}        |{Style.RESET_ALL}")
 
 
 def compile():
