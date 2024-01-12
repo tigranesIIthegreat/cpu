@@ -1,20 +1,24 @@
 `include "rtl/register_file.v"
 
 module register_file_tb;
-    reg [1:0] read_address;
+    reg [1:0] read_address_1;
+    reg [1:0] read_address_2;
     reg [1:0] write_address;
     reg [7:0] write_data;
     reg write_enable;
     reg reset;
-    wire [7:0] read_data;
+    wire [7:0] read_data_1;
+    wire [7:0] read_data_2;
 
     register_file GPR (
-        .read_address(read_address),
+        .read_address_1(read_address_1),
+        .read_address_2(read_address_2),
         .write_address(write_address),
         .write_data(write_data),
         .write_enable(write_enable),
         .reset(reset),
-        .read_data(read_data)
+        .read_data_1(read_data_1),
+        .read_data_2(read_data_2)
     );
 
     reg clock = 0;
@@ -51,10 +55,11 @@ module register_file_tb;
             $fwrite(log_file, "%b\t\t", write_data);
 
             j = 0;
-            repeat (4) begin
-                read_address = j;
-                #1 $fwrite(log_file, "%b\t\t", read_data);
-                j = j + 1;
+            repeat (2) begin
+                read_address_1 = j;
+                read_address_2 = j + 1;
+                #1 $fwrite(log_file, "%b\t\t%b\t\t", read_data_1, read_data_2);
+                j = j + 2;
             end
 
             $fdisplay(log_file);
