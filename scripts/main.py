@@ -4,6 +4,7 @@ from check.instruction_register import InstructionRegister
 from check.memory import Memory
 from check.program_counter import ProgramCounter
 from check.register_file import RegisterFile
+from check.zero_flag import ZeroFlag
 
 import os
 import subprocess
@@ -92,6 +93,7 @@ def check():
     Memory('log/memory.log').verify()
     ProgramCounter('log/program_counter.log').verify()
     RegisterFile('log/register_file.log').verify()
+    ZeroFlag('log/zero_flag.log').verify()
 
 if __name__ == '__main__':     
     compile()
