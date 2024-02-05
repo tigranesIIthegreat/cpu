@@ -41,10 +41,9 @@ module alu_tb;
         opCode = 0;
 
         repeat (2**WORD_WIDTH * 2**WORD_WIDTH * 2**OPCODE_WIDTH) begin
-            @(posedge clock); // Wait for next clock cycle
+            @(posedge clock);
             $fdisplay(log_file, "%b\t\t%b\t\t%b\t\t%b\t\t%b", operand1, operand2, opCode, result, zero_flag);
 
-            // Increment inputs for the next test
             if (operand2 == (2**WORD_WIDTH - 1)) begin
                 operand2 = 0;
                 if (operand1 == (2**WORD_WIDTH - 1)) begin

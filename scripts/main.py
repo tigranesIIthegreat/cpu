@@ -2,6 +2,7 @@ from check.alu import ALU
 from check.instruction_decoder import InstructionDecoder
 from check.instruction_register import InstructionRegister
 from check.memory import Memory
+from check.mux import Mux
 from check.program_counter import ProgramCounter
 from check.register_file import RegisterFile
 from check.zero_flag import ZeroFlag
@@ -91,6 +92,7 @@ def check():
     InstructionDecoder('log/instruction_decoder.log').verify()
     InstructionRegister('log/instruction_register.log').verify()
     Memory('log/memory.log').verify()
+    Mux('log/mux.log').verify()
     ProgramCounter('log/program_counter.log').verify()
     RegisterFile('log/register_file.log').verify()
     ZeroFlag('log/zero_flag.log').verify()
