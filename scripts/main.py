@@ -1,4 +1,5 @@
 from check.alu import ALU
+from check.demux import Demux
 from check.instruction_decoder import InstructionDecoder
 from check.instruction_register import InstructionRegister
 from check.memory import Memory
@@ -89,6 +90,7 @@ def run():
 
 def check():
     ALU('log/alu.log').verify()
+    Demux('log/demux.log').verify()
     InstructionDecoder('log/instruction_decoder.log').verify()
     InstructionRegister('log/instruction_register.log').verify()
     Memory('log/memory.log').verify()

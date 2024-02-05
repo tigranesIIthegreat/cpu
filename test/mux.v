@@ -22,7 +22,7 @@ module mux_tb;
         data0 = 0;
         data1 = 0;
         
-        repeat (2**8 * 2**8 * 2) begin
+        repeat (2**8 * 2**8) begin
             select = 0;
             #1 $fdisplay(log_file, "%b\t\t%b\t\t%b\t\t%b", data0, data1, select, result);
             select = 1;
